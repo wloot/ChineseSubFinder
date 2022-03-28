@@ -2,6 +2,9 @@ package sub_timeline_fixer
 
 import (
 	"errors"
+	"math"
+	"os"
+
 	"github.com/allanpk716/ChineseSubFinder/internal/logic/sub_parser/ass"
 	"github.com/allanpk716/ChineseSubFinder/internal/logic/sub_parser/srt"
 	"github.com/allanpk716/ChineseSubFinder/internal/pkg/ffmpeg_helper"
@@ -14,8 +17,6 @@ import (
 	"github.com/emirpasic/gods/maps/treemap"
 	"github.com/emirpasic/gods/utils"
 	"github.com/sirupsen/logrus"
-	"math"
-	"os"
 )
 
 type SubTimelineFixerHelperEx struct {
@@ -227,10 +228,10 @@ func (s SubTimelineFixerHelperEx) changeTimeLineAndSave(infoSrc *subparser.FileI
 		}
 	}
 
-	err = os.Rename(desSubSaveFPath, desSubSaveFPath+sub_timeline_fixer.BackUpExt)
-	if err != nil {
-		return err
-	}
+	//err = os.Rename(desSubSaveFPath, desSubSaveFPath+sub_timeline_fixer.BackUpExt)
+	//if err != nil {
+	//	return err
+	//}
 
 	err = os.Rename(subFileName, desSubSaveFPath)
 	if err != nil {
