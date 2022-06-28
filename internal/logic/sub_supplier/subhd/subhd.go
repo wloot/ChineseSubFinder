@@ -593,6 +593,8 @@ func (s *Supplier) downloadSubFile(browser *rod.Browser, page *rod.Page, subDown
 		}
 		// 初始化页面用于查询元素
 		pString := page.MustHTML()
+		s.log.Debugln("subhd 地址: ", subDownloadPageUrl)
+		s.log.Debugln(pString)
 		doc, err = goquery.NewDocumentFromReader(strings.NewReader(pString))
 		if err != nil {
 			return
@@ -601,12 +603,14 @@ func (s *Supplier) downloadSubFile(browser *rod.Browser, page *rod.Page, subDown
 		s.log.Debugln("click '验证获取下载地址'")
 		clickCodeBtn := doc.Find(btnClickCodeBtn)
 		if len(clickCodeBtn.Nodes) < 1 {
+			s.log.Debugln("subhd没有找到按钮")
 			return
 		}
 		element := page.MustElement(btnClickCodeBtn)
 
 		findInputCode, err := page.Element(InputCode)
 		if err != nil {
+			s.log.Debugln("subhd: gzhcode: ", err.Error())
 			return
 		}
 		if findInputCode != nil {
