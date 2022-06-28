@@ -8,7 +8,7 @@ ARG VERSION
 WORKDIR /root/buildspace
 COPY . .
 COPY --from=frontBuilder /root/buildspace/dist/spa /root/buildspace/frontend/dist/spa
-RUN go build -ldflags="-s -w -X main.AppVersion=${VERSION}" ./cmd/chinesesubfinder
+RUN go build -ldflags="-X main.AppVersion=${VERSION}" ./cmd/chinesesubfinder
 
 FROM allanpk716/chinesesubfinder-base:latest
 ENV TZ=Asia/Shanghai \
