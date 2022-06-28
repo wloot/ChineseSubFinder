@@ -1,4 +1,4 @@
-FROM node:18 as frontBuilder
+FROM node:17 as frontBuilder
 WORKDIR /root/buildspace
 COPY ./frontend .
 RUN npm ci && npm run build
