@@ -13,7 +13,6 @@ import (
 	"github.com/allanpk716/ChineseSubFinder/internal/pkg/global_value"
 	"github.com/allanpk716/ChineseSubFinder/internal/pkg/my_folder"
 	"github.com/allanpk716/ChineseSubFinder/internal/pkg/my_util"
-	"github.com/allanpk716/ChineseSubFinder/internal/pkg/random_useragent"
 	"github.com/allanpk716/ChineseSubFinder/internal/pkg/settings"
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/launcher"
@@ -56,8 +55,8 @@ func NewBrowser(log *logrus.Logger, localChromeFPath, httpProxyURL string, loadA
 		}
 	})
 
-	// 随机的 rod 子文件夹名称
-	nowUserData := filepath.Join(global_value.DefRodTmpRootFolder(), my_util.RandStringBytesMaskImprSrcSB(20))
+	loadAdblock = false
+	nowUserData := filepath.Join(global_value.DefRodTmpRootFolder(), "my_cachedir")
 	var browser *rod.Browser
 
 	if localChromeFPath != "" {
@@ -215,15 +214,6 @@ func NewPageNavigate(browser *rod.Browser, desURL string, timeOut time.Duration,
 
 	page, err := newPage(browser)
 	if err != nil {
-		return nil, err
-	}
-	err = page.SetUserAgent(&proto.NetworkSetUserAgentOverride{
-		UserAgent: random_useragent.RandomUserAgent(true),
-	})
-	if err != nil {
-		if page != nil {
-			page.Close()
-		}
 		return nil, err
 	}
 	page = page.Timeout(timeOut + addSleepTime)
